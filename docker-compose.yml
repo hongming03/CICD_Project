@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    # Mapping port 5000 on the host to port 8000 on the container
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      # Ensures data is persisted even if the container is removed
+      - postgres_data:/var/lib/postgresql/data
+      # Postgres images have a special folder /docker-entrypoint-initdb.d/. Any .sql files in this folder will be run when the database is first initialized
+      # Note: This will only run if the special folder(/docker-entrypoint-initdb.d/init.sql) in Postgres is empty. 
+      #If you want to re-run it, you need to delete the volume or docker-compose down -v
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+# Creating a host volume to mapo to the container volume
+volumes:
+  postgres_data:
+
