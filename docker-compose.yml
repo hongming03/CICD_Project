@@ -27,7 +27,7 @@ services:
       #If you want to re-run it, you need to delete the volume or docker-compose down -v
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
-# Creating a host volume to mapo to the container volume
+# Creating a host volume to mapo to the container
 volumes:
   postgres_data:
 
