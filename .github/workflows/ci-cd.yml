@@ -23,6 +23,14 @@ jobs:
         run: |
           ls -la
 
+      # Creating .env file for docker-compose because .env file is in .gitignore and won't be pushed to repo
+      - name: Generate .env from job env
+        run: |
+          echo "DB_HOST=$DB_HOST" >> .env
+          echo "DB_NAME=$DB_NAME" >> .env
+          echo "DB_USER=$DB_USER" >> .env
+          echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
