@@ -9,6 +9,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     env:
+      ACTIONS_STEP_DEBUG: true
       DB_HOST: ${{ vars.DB_HOST }}
       DB_NAME: ${{ vars.DB_NAME }}
       DB_USER: ${{ vars.DB_USER }}
@@ -17,6 +18,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: List workspace files
+        run: |
+          ls -la
 
       - name: Set up Python
         uses: actions/setup-python@v5
