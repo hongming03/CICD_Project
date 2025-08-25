@@ -30,10 +30,8 @@ jobs:
 
       - name: Start services with Docker Compose
         run: |
-          docker-compose up --build
+          docker compose up --build
          
-    
-
       - name: Run tests with coverage
         run: |
           coverage run -m unittest discover tests
