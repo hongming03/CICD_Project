@@ -105,6 +105,13 @@ jobs:
         run: |
           docker compose up --build -d
 
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h db -p 5432; do
+            echo "Waiting for Postgres..."
+            sleep 2
+          done
+      
       # Integration test to be ran inside to the web container. Else the servvice host name does not exist
       - name: Run integration tests
         run: docker compose exec web python -m unittest discover -s tests/integration_test -p "*.py"
