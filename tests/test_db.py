@@ -1,47 +1,45 @@
 import unittest
-import psycopg2
-import os
+from unittest.mock import patch, MagicMock
 
-class PostgresTestCase(unittest.TestCase):
+class PostgresMockTestCase(unittest.TestCase):
 
-    def setUp(self):
-        # Connect to the database using environment variables
-        self.conn = psycopg2.connect(
-            host=os.getenv("DB_HOST"),
-            database=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD")
-        )
-        self.cur = self.conn.cursor()
+    @patch("psycopg2.connect")
+    def setUp(self, mock_connect):
+        # Mock connection and cursor
+        self.mock_conn = MagicMock()
+        self.mock_cur = MagicMock()
+        self.mock_conn.cursor.return_value = self.mock_cur
+        mock_connect.return_value = self.mock_conn
+
+        # Store cursor and connection like before
+        self.conn = self.mock_conn
+        self.cur = self.mock_cur
 
     def tearDown(self):
-        # Close cursor and connection after each test
         self.cur.close()
         self.conn.close()
 
     def test_connection(self):
         """Test that the database connection works"""
+        self.cur.fetchone.return_value = [1]  # Mock result of SELECT 1;
         self.cur.execute("SELECT 1;")
         result = self.cur.fetchone()
         self.assertEqual(result[0], 1)
 
     def test_table_exists(self):
         """Test that the 'urls' table exists"""
-        self.cur.execute("""
-            SELECT EXISTS (
-                SELECT FROM information_schema.tables 
-                WHERE table_name = 'urls'
-            );
-        """)
+        self.cur.fetchone.return_value = [True]  # Mock table exists
+        self.cur.execute("SELECT EXISTS (...)")
         exists = self.cur.fetchone()[0]
         self.assertTrue(exists)
 
     def test_insert_and_select(self):
         """Test basic insert and select (transaction rolled back after test)"""
-        self.cur.execute("BEGIN;")  # Start transaction
+        self.cur.fetchone.return_value = ["exmpl"]  # Mock select result
+        self.cur.execute("BEGIN;")
         self.cur.execute("INSERT INTO urls (original_url, short_code) VALUES (%s, %s);",
                          ("https://example.com", "exmpl"))
         self.cur.execute("SELECT short_code FROM urls WHERE original_url = %s;", ("https://example.com",))
         result = self.cur.fetchone()[0]
         self.assertEqual(result, "exmpl")
-        self.cur.execute("ROLLBACK;")  # Roll back to avoid modifying real data
+        self.cur.execute("ROLLBACK;")

@@ -6,8 +6,6 @@ CICD Project from Scratch
 5. Use docker-compose to spin up the services and make sure to update environment variables in .env to service names
 6. Push Code to Github (except .env) and set up Repository Variables/Secrets 
 7. Modify .yml files to use github Repository Variables/Secrets
-8. Create CICD Pipeline
+8. Create CICD Pipeline, ensure that the CICD works
 
 
-tmr understand the test cases
-continue and step 7
