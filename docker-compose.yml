@@ -11,7 +11,7 @@ services:
     ports:
       - "5000:5000"
 
-    # can remain as is, in github actions CI/CD, it will be overridden by env vars defined in the workflow file
+    # can remain as is for local testing. In github actions CI/CD, it will be overridden by env vars defined in the workflow file during CICD
     env_file:
       - .env
 
@@ -30,10 +30,10 @@ services:
   db:
     image: postgres:13
 
-    # can remain as is, in github actions CI/CD, it will be overridden by env vars defined in the workflow file
+    # can remain as is for local testing. In github actions CI/CD, it will be overridden by env vars defined in the workflow file during CICD
     env_file:
       - .env
-      
+
     # Creating a postgres database with the name, user and password defined in the .env file
     environment:
       - POSTGRES_DB=${DB_NAME}

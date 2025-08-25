@@ -142,3 +142,34 @@ jobs:
         if: always()
         run: |
           docker compose down -v
+
+
+  deploy:
+    needs: integration-test
+    runs-on: self-hosted
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: List workspace files
+        run: |
+          ls -la
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f .\kubernetes\
+
+      - name: Port forward
+        run: |
+          kubectl port-forward service/web 5000:5000 &
+          PORT_FORWARD_PID=$!
+
+      - name: Close port forward
+        run: |
+          kill $PORT_FORWARD_PID
+
+      # - name: Delete deployment
+      #   if: always()
+      #   run: |
+      #     kubectl delete -f .\kubernetes\
