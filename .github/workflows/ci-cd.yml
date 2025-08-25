@@ -154,7 +154,7 @@ jobs:
       
       - name: List workspace files
         run: |
-          dir /a
+          dir 
 
       - name: Deploy to Kubernetes
         run: |
