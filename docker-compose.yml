@@ -34,6 +34,12 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
     healthcheck:
+    # CMD ["executable", "param1", ...] → runs directly (no shell features like variables, pipes).
+    # CMD-SHELL "command string" → runs inside a shell (sh -c), so you can use environment variables
+    
+    # pg_isready -h localhost -p 5432 -U postgres -d postgres
+    # returns - localhost:5432 - accepting connections (if healthy)
+    
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       retries: 10
