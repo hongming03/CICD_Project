@@ -17,10 +17,10 @@ CICD Project from Scratch
 12. Push your web image to docker hub
 13. Create Self-hosted runner for deployment job ./run.cmd
 14. Configure deployment yaml for kubernetes
+15. Configure Deployment in CICD (github actions)
 
 Blockers that was ran into during project:
-1. Volume not deleted causing the db table to not create in local environment
-2. Postgres database did not create in time leading to failed integration test - requires healthcheck
+1. Postgres database did not create in time leading to failed integration test - requires healthcheck
 
 
 kubectl port-forward service/web 5000:5000 &
@@ -33,4 +33,4 @@ kill $PORT_FORWARD_PID
 2. configure cicd for deployment
 
 
-kubectl create secret generic db-secret --from-literal=password=postgress
+

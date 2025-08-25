@@ -15,7 +15,7 @@ spec:
 
       containers:
         - name: web
-          image: hongming2003/cicd_project_web:latest
+          image: hongming2003/cicd_project:latest
           ports:
             - containerPort: 5000
           # Optional: healthCheck

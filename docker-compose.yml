@@ -29,6 +29,11 @@ services:
   
   db:
     image: postgres:13
+
+    # can remain as is, in github actions CI/CD, it will be overridden by env vars defined in the workflow file
+    env_file:
+      - .env
+      
     # Creating a postgres database with the name, user and password defined in the .env file
     environment:
       - POSTGRES_DB=${DB_NAME}
