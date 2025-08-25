@@ -42,7 +42,7 @@ services:
       # Postgres images have a special folder /docker-entrypoint-initdb.d/. Any .sql files in this folder will be run when the database is first initialized
       # Note: This will only run if the special folder(/docker-entrypoint-initdb.d/init.sql) in Postgres is empty. 
       # If you want to re-run it, you need to delete the volume or docker-compose down -v
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
     healthcheck:
     # CMD ["executable", "param1", ...] → runs directly (no shell features like variables, pipes).
