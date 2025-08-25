@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
+
 class PostgresMockTestCase(unittest.TestCase):
 
-
-    # Creating a mock Postgres server connection. Else, in CICD, when the unit test runs on the runner host, 
+    # Creating a mock Postgres server connection. Else, in CICD, when the unit test runs on the runner host,
     # there isnt a Postgres server running as the actual Postgres server is running in a docker container
     @patch("psycopg2.connect")
     def setUp(self, mock_connect):
@@ -40,9 +40,14 @@ class PostgresMockTestCase(unittest.TestCase):
         """Test basic insert and select (transaction rolled back after test)"""
         self.cur.fetchone.return_value = ["exmpl"]  # Mock select result
         self.cur.execute("BEGIN;")
-        self.cur.execute("INSERT INTO urls (original_url, short_code) VALUES (%s, %s);",
-                         ("https://example.com", "exmpl"))
-        self.cur.execute("SELECT short_code FROM urls WHERE original_url = %s;", ("https://example.com",))
+        self.cur.execute(
+            "INSERT INTO urls (original_url, short_code) VALUES (%s, %s);",
+            ("https://example.com", "exmpl"),
+        )
+        self.cur.execute(
+            "SELECT short_code FROM urls WHERE original_url = %s;",
+            ("https://example.com",),
+        )
         result = self.cur.fetchone()[0]
         self.assertEqual(result, "exmpl")
         self.cur.execute("ROLLBACK;")
