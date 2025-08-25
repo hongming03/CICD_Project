@@ -104,3 +104,9 @@ jobs:
       # Run docker compose in detached mode. Else, the job will be stuck here
         run: |
           docker compose up --build -d
+
+      - name: Tear down services
+      #Ensure services are taken down even if the tests fail
+        if: always()
+        run: |
+          docker compose down -v
