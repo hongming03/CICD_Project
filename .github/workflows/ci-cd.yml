@@ -164,8 +164,6 @@ jobs:
         run: |
           $job = Start-Job { kubectl port-forward service/web 5000:5000 }
 
-          Start-Sleep -Seconds 5
-
           Stop-Job -Id $job.Id
           Remove-Job -Id $job.Id
 
