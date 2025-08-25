@@ -12,8 +12,19 @@ def get_connection():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
     )
-
+    cur = conn.cursor()
+    # Ensure the table exists every time a connection is established
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS urls (
+            id SERIAL PRIMARY KEY,
+            original_url TEXT NOT NULL,
+            short_code TEXT NOT NULL
+        )
+    """)
+    conn.commit()
+    cur.close()
     return conn
+
 
 
 # Not needed, table will be initialized when running docker compose via db/init.sql
