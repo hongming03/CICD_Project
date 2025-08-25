@@ -163,11 +163,12 @@ jobs:
       - name: Start port forward
         run: |
           $job = Start-Job { kubectl port-forward service/web 5000:5000 }
-          echo "JOB_ID=$($job.Id)" >> $env:GITHUB_ENV
 
-          $id = $env:JOB_ID
-          Stop-Job -Id $id
-          Remove-Job -Id $id
+          Start-Sleep -Seconds 5
+
+          Stop-Job -Id $job.Id
+          Remove-Job -Id $job.Id
+
 
 
       # - name: Delete deployment
