@@ -1,5 +1,6 @@
 # docker-compose up --build
-# docker-compose down
+# docker-compose down -v
+# -v option is important to remove volumes too. Else, the db will not be re-initialized
 version: '3.8'
 
 services:
@@ -17,6 +18,7 @@ services:
   
   db:
     image: postgres:13
+    # Creating a postgres database with the name, user and password defined in the .env file
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -28,7 +30,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       # Postgres images have a special folder /docker-entrypoint-initdb.d/. Any .sql files in this folder will be run when the database is first initialized
       # Note: This will only run if the special folder(/docker-entrypoint-initdb.d/init.sql) in Postgres is empty. 
-      #If you want to re-run it, you need to delete the volume or docker-compose down -v
+      # If you want to re-run it, you need to delete the volume or docker-compose down -v
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
 # Creating a host volume to map to the container

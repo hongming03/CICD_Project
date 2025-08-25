@@ -106,7 +106,8 @@ jobs:
           docker compose up --build -d
 
       - name: Tear down services
-      #Ensure services are taken down even if the tests fail
+      # Ensure services are taken down even if the tests fail.continue-on-error
+      # Tear down volumes too, so that the DB is re-initialized next time.This is important if it is a self-hosted runner.
         if: always()
         run: |
           docker compose down -v

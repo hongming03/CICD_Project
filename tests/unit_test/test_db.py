@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-
 class PostgresMockTestCase(unittest.TestCase):
 
     # Creating a mock Postgres server connection. Else, in CICD, when the unit test runs on the runner host,
