@@ -1,7 +1,12 @@
 import unittest
 import psycopg2
 import os
+import sys
 from dotenv import load_dotenv
+# Add parent of integration_tests (i.e., 'tests' folder parent) to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
+from connect_postgres import get_connection
 
 # Load the .env file at the start of your test module
 load_dotenv() 
@@ -9,12 +14,8 @@ load_dotenv()
 class URLIntegrationTest(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(
-            host=os.getenv("DB_HOST"), # This host name needs to match the service name in docker-compose.yml
-            database=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD")
-        )
+        # Use your get_connection() function, so table gets created
+        self.conn = get_connection()
         self.cur = self.conn.cursor()
 
     def tearDown(self):

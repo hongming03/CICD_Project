@@ -42,7 +42,7 @@ jobs:
           coverage run -m unittest discover tests/unit_test
           coverage report -m
 
-  docker-build:
+  docker-build-and-push:
     runs-on: ubuntu-latest
     needs: unit-test
 
@@ -73,7 +73,7 @@ jobs:
 
   integration-test:
     runs-on: ubuntu-latest
-    needs: docker-build
+    needs: docker-build-and-push
 
     env:
       ACTIONS_STEP_DEBUG: true
