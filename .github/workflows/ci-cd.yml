@@ -105,13 +105,19 @@ jobs:
         run: |
           docker compose up --build -d
       
-      # Debug: check running services
-      - name: Show running containers
-        run: docker compose ps
+      # # Debug: check running services
+      # - name: Show running containers
+      #   run: docker compose ps
 
-      # Debug: show DB logs
-      - name: Show DB logs
-        run: docker compose logs db
+      # # Debug: show DB logs
+      # - name: Show DB logs
+      #   run: docker compose logs db
+
+      - name: Wait for Postgres to be healthy
+        run: |
+          echo "Waiting for db to be healthy..."
+          docker compose ps
+          timeout 90s bash -c 'until [ "$(docker inspect -f {{.State.Health.Status}} $(docker compose ps -q db))" = "healthy" ]; do sleep 2; done'
 
       # Integration test to be ran inside to the web container. Else the servvice host name does not exist
       - name: Run integration tests
