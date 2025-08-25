@@ -1,19 +1,25 @@
 import psycopg2
 import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env file
 
 
-def get_connection():
-    conn = psycopg2.connect(
-        host=os.getenv("DB_HOST"),
-        database=os.getenv("DB_NAME"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-    )
-
-    return conn
+def get_connection(retries=5, delay=2):
+    for i in range(retries):
+        try:
+            conn = psycopg2.connect(
+                host=os.getenv("DB_HOST"),
+                database=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+            )
+            return conn
+        except psycopg2.OperationalError:
+            print(f"Database not ready, retrying {i+1}/{retries}...")
+            time.sleep(delay)
+    raise Exception("Cannot connect to database")
 
 
 # Not needed, table will be initialized when running docker compose via db/init.sql
