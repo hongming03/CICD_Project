@@ -1,4 +1,5 @@
 # docker-compose up --build
+# --build is to rebuild the image before starting the containers, even if it thinks the image already exists
 # docker-compose down -v
 # -v option is important to remove volumes too. Else, the db will not be re-initialized
 version: '3.8'
@@ -13,11 +14,14 @@ services:
     # can remain as is, in github actions CI/CD, it will be overridden by env vars defined in the workflow file
     env_file:
       - .env
+
     depends_on:
       - db
+
     healthcheck:
     # -f is needed to fail silently if the curl command fails. -f makes curl return a non-zero exit code if the HTTP response is 400 or greater
     # without -f curl does not treat HTTP errors like 404,500 as an error
+    # Change /health to return 400, the container should be unhealthy
       test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
       interval: 5s
       retries: 5

@@ -8,6 +8,7 @@ app = Flask(__name__)
 def hello_route():
     return render_template("add_url.html")
 
+# Return a OK response body and 200 status code for health checks in docker-compose
 @app.route("/health")
 def health():
     return "OK", 200
