@@ -117,7 +117,7 @@ jobs:
 
       # docker inspect -f {{.State.Health.Status}} - returns the health status of the container
       # $(docker compose ps -q db) - this get the container id of the db service
-      
+
       # Anything inside $() gets executed first
       # timeout 90s limits the total execution time
       # bash -c '...' runs the command inside single quotes in a bash shell
@@ -125,7 +125,7 @@ jobs:
         run: |
           echo "Waiting for db to be healthy..."
           docker compose ps
-          timeout 90s bash -c 'until [ "$(docker inspect -f {{.State.Health.Status}} $(docker compose ps -q db))" = "healthy" ]timeout 90s bash -c 'until 
+          timeout 90s bash -c 'until [ "$(docker inspect -f {{.State.Health.Status}} $(docker compose ps -q db))" = "healthy" ]; do sleep 2; done'
 
       # Integration test to be ran inside to the web container. Else the servvice host name does not exist
       - name: Run integration tests
