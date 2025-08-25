@@ -146,7 +146,7 @@ jobs:
 
   deploy:
     needs: integration-test
-    runs-on: self-hosted
+    runs-on: [self-hosted, windows, x64]
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
@@ -154,7 +154,7 @@ jobs:
       
       - name: List workspace files
         run: |
-          ls -la
+          dir /a
 
       - name: Deploy to Kubernetes
         run: |
@@ -162,12 +162,14 @@ jobs:
 
       - name: Port forward
         run: |
-          kubectl port-forward service/web 5000:5000 &
-          PORT_FORWARD_PID=$!
+          $job = Start-Job { kubectl port-forward service/web 5000:5000 }
+          Get-Job
 
       - name: Close port forward
         run: |
-          kill $PORT_FORWARD_PID
+          Get-Job
+          Stop-Job -Id 1  
+          Remove-Job -Id 1
 
       # - name: Delete deployment
       #   if: always()

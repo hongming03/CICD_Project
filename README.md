@@ -15,7 +15,7 @@ CICD Project from Scratch
 
 ----- Deployment -----
 12. Push your web image to docker hub
-13. Create Self-hosted runner for deployment job ./run.cmd
+13. Create Self-hosted runner for deployment job ( run.cmd to run self hosted runner)
 14. Configure deployment yaml for kubernetes
 15. Configure Deployment in CICD (github actions)
 
