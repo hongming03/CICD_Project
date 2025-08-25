@@ -16,6 +16,8 @@ services:
     depends_on:
       - db
     healthcheck:
+    # -f is needed to fail silently if the curl command fails. -f makes curl return a non-zero exit code if the HTTP response is 400 or greater
+    # without -f curl does not treat HTTP errors like 404,500 as an error
       test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
       interval: 5s
       retries: 5

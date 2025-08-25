@@ -2,6 +2,8 @@
 FROM python:3.11-slim
 
 # Install curl (needed for healthcheck)
+# Since python:3.11-slim/python:3.11 is Debian-based, use apt-get
+# If Alpine-based Python image need to use apk add --no-cache curl
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Set working directory inside container
