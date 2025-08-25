@@ -8,13 +8,15 @@ app = Flask(__name__)
 def hello_route():
     return render_template("add_url.html")
 
+@app.route("/health")
+def health():
+    return "OK", 200
 
 # Not needed, table will be initialized when running docker compose via db/init.sql
 # @app.route('/create_table')
 # def create_database_table_route():
 #     create_table()
 #     return "Table created!"
-
 
 @app.route("/add_url", methods=["POST"])
 def add_url_route():

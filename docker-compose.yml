@@ -15,6 +15,11 @@ services:
       - .env
     depends_on:
       - db
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 5s
+      retries: 5
+      start_period: 5s
   
   db:
     image: postgres:13
@@ -39,7 +44,7 @@ services:
     
     # pg_isready -h localhost -p 5432 -U postgres -d postgres
     # returns - localhost:5432 - accepting connections (if healthy)
-    
+
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       retries: 10

@@ -11,6 +11,9 @@ CICD Project from Scratch
 11. Create CICD Pipeline, ensure that the CICD works
 12. 
 
-understand the health checks and how it works
+Blockers that was ran into during project:
+1. Volume not deleted causing the db table to not create in local environment
+2. Postgres database did not create in time leading to failed integration test - requires healthcheck
+
 
 
