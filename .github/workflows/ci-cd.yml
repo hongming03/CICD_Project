@@ -162,12 +162,13 @@ jobs:
 
       - name: Start port forward
         run: |
-          $proc = Start-Process kubectl -ArgumentList "port-forward service/web 5000:5000" -PassThru
-          echo "KUBE_PID=$($proc.Id)" >> $env:GITHUB_ENV
+          $job = Start-Job { kubectl port-forward service/web 5000:5000 }
+          echo "JOB_ID=$($job.Id)" >> $env:GITHUB_ENV
 
-      - name: Close port forward
-        run: |
-          Stop-Process -Id $env:KUBE_PID -Force
+          $id = $env:JOB_ID
+          Stop-Job -Id $id
+          Remove-Job -Id $id
+
 
       # - name: Delete deployment
       #   if: always()
