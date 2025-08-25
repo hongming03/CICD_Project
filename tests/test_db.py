@@ -3,6 +3,9 @@ from unittest.mock import patch, MagicMock
 
 class PostgresMockTestCase(unittest.TestCase):
 
+
+    # Creating a mock Postgres server connection. Else, in CICD, when the unit test runs on the runner host, 
+    # there isnt a Postgres server running as the actual Postgres server is running in a docker container
     @patch("psycopg2.connect")
     def setUp(self, mock_connect):
         # Mock connection and cursor
