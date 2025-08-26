@@ -23,14 +23,17 @@ Blockers that was ran into during project:
 1. Postgres database did not create in time leading to failed integration test - requires healthcheck
 
 
-kubectl port-forward service/web 5000:5000 &
-
-PORT_FORWARD_PID=$!
-
-kill $PORT_FORWARD_PID
+minikube start
+run your github actions runner
 
 1. Use environment variables for deployment.yml
-2. configure cicd for deployment
+2. Do slack noti
+3. Film video of this proj
 
+need to store 
+
+db host name
+db user
+db password
 
 

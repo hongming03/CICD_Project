@@ -15,13 +15,11 @@ spec:
       containers:
       - name: db
         image: postgres:13
-        env:
-          - name: POSTGRES_DB
-            value: db
-          - name: POSTGRES_USER
-            value: postgres
-          - name: POSTGRES_PASSWORD
-            value: postgres
+        envFrom:
+        - configMapRef:
+            name: postgres-config   # pulls POSTGRES_DB + POSTGRES_USER
+        - secretRef:
+            name: postgres-secret   # pulls POSTGRES_PASSWORD
         ports:
         - containerPort: 5432
         volumeMounts:
