@@ -18,10 +18,17 @@ spec:
           image: hongming2003/cicd_project:latest
           ports:
             - containerPort: 5000
-          # Optional: healthCheck
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: 5000
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
+            
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5   # Wait 5s after container starts
+            periodSeconds: 10        # Then check /health every 10s
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10  # Wait 10s before first liveness check
+            periodSeconds: 15        # Then check /health every 15s
