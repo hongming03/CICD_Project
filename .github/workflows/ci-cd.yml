@@ -171,20 +171,29 @@ jobs:
         run: |
           kubectl apply -f .\kubernetes\
 
-      - name: Start port forward
+      - name: Wait for deployments to be ready
         run: |
-          $job = Start-Job { kubectl port-forward service/web 5000:5000 }
+          kubectl rollout status deployment/web --timeout=120s
+          kubectl rollout status deployment/db --timeout=120s
 
-        # Stop-Job -Id $job.Id
-        # Remove-Job -Id $job.Id
+      - name: Get services info
+        run: |
+          kubectl get all
+          kubectl get svc
+      
+    
+      # - name: Start port forward
+      #   run: |
+      #     $job = Start-Job { kubectl port-forward service/web 5000:5000 }
+
+      #     Stop-Job -Id $job.Id
+      #     Remove-Job -Id $job.Id
 
       # - name: Delete Configmaps and secrets
       #   if:always()
       #   run: |
       #     kubectl delete configmap postgres-config
       #     kubectl delete secret postgres-secret
-
-
 
       # - name: Delete deployment
       #   if:always()
