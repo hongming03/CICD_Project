@@ -31,6 +31,9 @@ This project demonstrates a complete CI/CD pipeline for a web application using 
 ## CI/CD Pipeline Jobs
 ![CI/CD Pipeline](demo/CICD_image.png)
 
+## Kubernetes Diagram
+![Kubernetes Diagram](demo/kubernetes_cluster.jpg)
+
 ## Challenges / Lessons Learned
 - Port forwarding issues when running Minikube in Docker
 - Securely managing environment variables using GitHub Actions secrets
