@@ -29,7 +29,7 @@ This project demonstrates a complete CI/CD pipeline for a web application using 
 - Environment variables are securely managed using GitHub Actions secrets
 
 ## CI/CD Pipeline Jobs
-![CI/CD Pipeline](demo/CICD_image.png)
+![CI/CD Pipeline](demo/CICD_image.jpg)
 
 ## Kubernetes Diagram
 ![Kubernetes Diagram](demo/kubernetes_cluster.jpg)
