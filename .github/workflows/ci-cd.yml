@@ -181,7 +181,7 @@ jobs:
           kubectl get all
           kubectl get svc
       
-    
+
       # - name: Start port forward
       #   run: |
       #     $job = Start-Job { kubectl port-forward service/web 5000:5000 }
@@ -199,3 +199,26 @@ jobs:
       #   if:always()
       #   run: |
       #     kubectl delete -f .\kubernetes\
+
+      
+  slack-notification:
+    #Will still run even when workflow is cancelled
+    if: always() 
+    name: Slack Notification
+    # Ideally should be after dev/prod integration test
+    needs: [deploy]
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: github-actions-channel
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          # SLACK_ICON: https://gitlab.com/sidd-harth/solar-system/-/raw/main/images/saturn.png
+          SLACK_MESSAGE: ':hammer_and_wrench: Triggered by ${{ github.actor }}'
+          SLACK_TITLE: Information
+    
+      
