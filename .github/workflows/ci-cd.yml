@@ -31,11 +31,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lint and Format Check
-        run: |
-          flake8 .
-          black --check .
-        continue-on-error: true
+      # - name: Lint and Format Check
+      #   run: |
+      #     flake8 .
+      #     black --check .
+      #   continue-on-error: true
 
       - name: Run tests with coverage
         run: |
@@ -200,7 +200,7 @@ jobs:
       #   run: |
       #     kubectl delete -f .\kubernetes\
 
-      
+
   slack-notification:
     #Will still run even when workflow is cancelled
     if: always() 

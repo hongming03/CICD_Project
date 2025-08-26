@@ -26,14 +26,10 @@ Blockers that was ran into during project:
 minikube start
 run your github actions runner
 
-1. Use environment variables for deployment.yml
-2. Do slack noti
-3. Film video of this proj
 
-need to store 
 
-db host name
-db user
-db password
+
+
+
 
 
