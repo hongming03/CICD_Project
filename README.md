@@ -4,7 +4,7 @@
 This project demonstrates a complete CI/CD pipeline for a web application using Docker, Kubernetes, and GitHub Actions. It covers containerization, deployment, and automation from code commit to deployment.
 
 ## Demo
-[Watch Demo](demo/your-demo.mp4)
+[Watch Demo](demo/CICD_Demo.mp4)
 
 ## Features
 - Dockerized web and database services
