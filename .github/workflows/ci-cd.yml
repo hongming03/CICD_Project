@@ -179,7 +179,7 @@ jobs:
         # Remove-Job -Id $job.Id
 
       # - name: Delete Configmaps and secrets
-      #   if: always()
+      #   if:always()
       #   run: |
       #     kubectl delete configmap postgres-config
       #     kubectl delete secret postgres-secret
@@ -187,6 +187,6 @@ jobs:
 
 
       # - name: Delete deployment
-      #   if: always()
+      #   if:always()
       #   run: |
       #     kubectl delete -f .\kubernetes\
