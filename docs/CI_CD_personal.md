@@ -26,8 +26,9 @@
 ## Showcase / Running the Project
 1. Start Minikube (`minikube start --driver=docker`)
 2. Start GitHub Actions self-hosted runner (`run.cmd`)
-3. Push code to GitHub
-4. Port forward to the web service (`minikube service web --url`) – not needed if Minikube runs on Hyper-V or a VM
+3. Enable the workflow and actions on Github
+4. Push code to GitHub
+5. Port forward to the web service (`minikube service web --url`) – not needed if Minikube runs on Hyper-V or a VM
 
 ## Clean Up
 1. Delete Kubernetes deployment (`kubectl delete -f ./k8s/`)
